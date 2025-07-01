@@ -1,7 +1,7 @@
 // src/components/Packages.js
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-
+import { useAuth } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 const Packages = () => {
   const { token } = useAuth();
   const [packages, setPackages] = useState([]);
@@ -58,6 +58,7 @@ const Packages = () => {
           ))}
         </ul>
       )}
+      <Link to="/packages/new">Create Package</Link>
     </div>
   );
 };

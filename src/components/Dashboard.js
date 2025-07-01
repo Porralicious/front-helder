@@ -3,7 +3,7 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
 import UserInfo from "./UserInfo";
-import Packages from "./Packages";
+import Packages from "./packages/Packages";
 
 const Dashboard = () => {
   const { user } = useAuth();
