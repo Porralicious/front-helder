@@ -3,6 +3,7 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
 import UserInfo from "./UserInfo";
+import Packages from "./Packages";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -47,11 +48,8 @@ const Dashboard = () => {
       <main style={styles.main}>
         <div style={styles.content}>
           <div style={styles.contentInner}>
-            <h2 style={styles.contentTitle}>Welcome to your Dashboard!</h2>
-            <p style={styles.contentSubtitle}>
-              You are successfully authenticated with JWT tokens.
-            </p>
-            <UserInfo user={user} />
+            <h2 style={styles.contentTitle}>Packages</h2>
+            <Packages />
           </div>
         </div>
       </main>
