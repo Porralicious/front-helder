@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import SignInForm from "./components/SignInForm";
+import Dashboard from "./components/Dashboard";
+import LoadingSpinner from "./components/LoadingSpinner";
 
-function App() {
+const AppContent = () => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingSpinner message="Initializing application..." />;
+  }
+
+  return isAuthenticated ? <Dashboard /> : <SignInForm />;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
-}
+};
 
 export default App;
