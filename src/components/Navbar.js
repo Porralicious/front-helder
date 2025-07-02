@@ -41,9 +41,7 @@ const Navbar = () => {
       <div style={styles.navContent}>
         <h1 style={styles.title}>Dashboard</h1>
         <div style={styles.navRight}>
-          <span style={styles.welcome}>
-            Welcome, {user?.first_name || user?.email}!
-          </span>
+          <span style={styles.welcome}>Welcome, {user}!</span>
           <Button onClick={signOut} variant="danger" size="small">
             Sign Out
           </Button>
