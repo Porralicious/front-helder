@@ -10,6 +10,7 @@ import CreatePackage from "./components/packages/CreatePackage";
 import SignInForm from "./components/SignInForm";
 import { useAuth } from "./contexts/AuthContext";
 import LoadingSpinner from "./components/LoadingSpinner";
+import Driver from "./components/drivers/Driver";
 const AppContent = () => {
   const { isAuthenticated, loading } = useAuth();
 
@@ -43,6 +44,7 @@ const AppRouter = () => {
             isAuthenticated ? <CreatePackage /> : <Navigate to="/" replace />
           }
         />
+        <Route path="/drivers/:id" element={<Driver />} />
       </Routes>
     </Router>
   );
