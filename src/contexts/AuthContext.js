@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   const signOut = async () => {
     try {
       if (token) {
-        await fetch(`${API_BASE_URL}/logout`, {
+        await fetch(`${API_BASE_URL}/users/sign_out`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
