@@ -21,33 +21,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       // fetchCurrentUser();
+      setUser(localStorage.getItem("user"));
+      if (user) {
+        setLoading(false);
+      } else {
+        signOut();
+      }
     } else {
       setLoading(false);
     }
   }, [token]);
-
-  // const fetchCurrentUser = async () => {
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/current_user`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     if (response.ok) {
-  //       const userData = await response.json();
-  //       setUser(userData.status.data.user);
-  //     } else {
-  //       signOut();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching current user:", error);
-  //     signOut();
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const signIn = async (email, password) => {
     try {
@@ -71,8 +54,8 @@ export const AuthProvider = ({ children }) => {
         if (authToken) {
           const cleanToken = authToken.replace("Bearer ", "");
           localStorage.setItem("token", cleanToken);
+          localStorage.setItem("user", data.data.email);
           setToken(cleanToken);
-          console.log(data.data);
           setUser(data.data.email);
           return { success: true, user: data.data };
         }
@@ -111,6 +94,7 @@ export const AuthProvider = ({ children }) => {
     signOut,
     loading,
     isAuthenticated: !!user,
+    token,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

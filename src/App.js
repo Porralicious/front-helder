@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import AppRouter from "./AppRouter";
 import SignInForm from "./components/SignInForm";
 import Dashboard from "./components/Dashboard";
 import LoadingSpinner from "./components/LoadingSpinner";
@@ -17,7 +18,7 @@ const AppContent = () => {
 const App = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <AppRouter />
     </AuthProvider>
   );
 };
