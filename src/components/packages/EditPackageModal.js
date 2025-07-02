@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const EditPackageModal = ({ isOpen, onClose, onSave, packageData }) => {
+const EditPackageModal = ({
+  isOpen,
+  onClose,
+  onSave,
+  packageData,
+  drivers,
+}) => {
   const [formData, setFormData] = useState({ ...packageData });
 
   useEffect(() => {
@@ -15,6 +21,16 @@ const EditPackageModal = ({ isOpen, onClose, onSave, packageData }) => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const date = new Date(timeString);
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -85,11 +101,30 @@ const EditPackageModal = ({ isOpen, onClose, onSave, packageData }) => {
             <input
               type="time"
               name="timeslot"
-              value={formData?.timeslot?.slice(0, 5) || ""}
+              value={formatTime(formData?.timeslot) || ""}
               onChange={handleChange}
               className="w-full p-2 border rounded"
               required
             />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Assigned Driver
+            </label>
+            <select
+              name="driver_id"
+              value={formData?.driver_id || ""}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+            >
+              <option value="">Unassigned</option>
+              {drivers.map((driver) => (
+                <option key={driver.id} value={driver.id}>
+                  {driver.email || `Driver #${driver.id}`}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex justify-end space-x-2 mt-4">

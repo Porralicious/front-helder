@@ -7,6 +7,7 @@ import EditPackageModal from "./EditPackageModal";
 const Packages = () => {
   const { token } = useAuth();
   const [packages, setPackages] = useState([]);
+  const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [startDate, setStartDate] = useState("");
@@ -128,8 +129,23 @@ const Packages = () => {
       }
     };
 
+    const fetchDrivers = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/drivers", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      const parsed = data.data.map((driver) => ({
+        id: driver.id,
+        email: driver.attributes.email,
+      }));
+      setDrivers(parsed);
+    };
+
     if (token) {
       fetchPackages();
+      fetchDrivers();
     }
   }, [token]);
 
@@ -260,6 +276,7 @@ const Packages = () => {
         onClose={() => setEditModalOpen(false)}
         onSave={handleSave}
         packageData={packageToEdit}
+        drivers={drivers}
       />
     </div>
   );
