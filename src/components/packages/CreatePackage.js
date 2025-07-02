@@ -34,7 +34,9 @@ const CreatePackage = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ package: formData }),
+        body: JSON.stringify({
+          package: { ...formData, timeslot: `${formData.timeslot}:00` },
+        }),
       });
 
       const data = await response.json();
@@ -63,66 +65,96 @@ const CreatePackage = () => {
   };
 
   return (
-    <div style={{ padding: "16px", maxWidth: "500px" }}>
-      <h2>Create New Package</h2>
+    <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-10">
+      <h2 className="text-2xl font-bold mb-4">Create New Package</h2>
+
       {status.message && (
-        <p style={{ color: status.success ? "green" : "red" }}>
+        <div
+          className={`mb-4 p-3 rounded ${
+            status.success
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
           {status.message}
-        </p>
+        </div>
       )}
-      <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label>Reference Number</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Reference Number
+          </label>
           <input
             type="text"
             name="reference_number"
             value={formData.reference_number}
             onChange={handleChange}
             required
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label>Location</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Location
+          </label>
           <input
             type="text"
             name="location"
             value={formData.location}
             onChange={handleChange}
             required
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label>Destination</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Destination
+          </label>
           <input
             type="text"
             name="destination"
             value={formData.destination}
             onChange={handleChange}
             required
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label>Date</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Date
+          </label>
           <input
             type="date"
             name="date"
             value={formData.date}
             onChange={handleChange}
             required
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label>Timeslot</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Timeslot
+          </label>
           <input
             type="time"
             name="timeslot"
             value={formData.timeslot}
             onChange={handleChange}
             required
+            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <button type="submit" style={{ marginTop: "16px" }}>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
+        >
           Create Package
         </button>
       </form>
