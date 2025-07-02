@@ -9,6 +9,8 @@ const Packages = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [packageToEdit, setPackageToEdit] = useState(null);
@@ -34,8 +36,16 @@ const Packages = () => {
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = packages.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(packages.length / itemsPerPage);
+  const filteredPackages = packages.filter((pkg) => {
+    if (startDate && pkg.date < startDate) return false;
+    if (endDate && pkg.date > endDate) return false;
+    return true;
+  });
+  const currentItems = filteredPackages.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredPackages.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -132,6 +142,44 @@ const Packages = () => {
         <h2 className="text-2xl font-bold mb-4">Packages</h2>
 
         <div className="overflow-x-auto">
+          <div className="mb-4 flex items-center flex-wrap gap-4">
+            <div>
+              <label className="block text-sm font-medium">Start Date</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="border rounded px-2 py-1"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">End Date</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="border rounded px-2 py-1"
+              />
+            </div>
+            <div className="self-end">
+              <button
+                onClick={() => {
+                  setStartDate("");
+                  setEndDate("");
+                  setCurrentPage(1);
+                }}
+                className="bg-gray-200 hover:bg-gray-300 px-4 py-1 rounded text-sm"
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
           <table className="min-w-full table-auto border border-gray-200 shadow rounded-xl">
             <thead className="bg-gray-100">
               <tr>
