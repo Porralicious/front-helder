@@ -2,8 +2,8 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
-import UserInfo from "./UserInfo";
 import Packages from "./packages/Packages";
+import Drivers from "./drivers/Drivers";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -19,6 +19,7 @@ const Dashboard = () => {
       padding: "24px 16px",
     },
     content: {
+      margin: "5px",
       border: "4px dashed #d1d5db",
       borderRadius: "8px",
       height: "400px",
@@ -48,8 +49,12 @@ const Dashboard = () => {
       <main style={styles.main}>
         <div style={styles.content}>
           <div style={styles.contentInner}>
-            <h2 style={styles.contentTitle}>Packages</h2>
             <Packages />
+          </div>
+        </div>
+        <div style={styles.content}>
+          <div style={styles.contentInner}>
+            <Drivers />
           </div>
         </div>
       </main>
